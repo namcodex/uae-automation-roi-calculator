@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>UAE Automation ROI Calculator</title>
+  <title>NAMCODEX | UAE Automation ROI Calculator</title>
   <!-- Tailwind CSS CDN for styling -->
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -15,14 +15,14 @@
     <!-- LEFT SIDE: Text & Copy (Option 1 - Modern & Direct) -->
     <div class="space-y-6">
       <div class="inline-flex items-center space-x-2 bg-slate-900 border border-slate-800 px-3 py-1 rounded-full text-xs font-medium text-cyan-400">
-        <span>⚡ System Integration Matrix</span>
+        <span class="font-mono tracking-wider">⚡ NAMCODEX // INTEGRATION MATRIX</span>
       </div>
       <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight text-white leading-tight">
         Stop Leaking Hours to <br class="hidden md:inline">
         <span class="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">Manual Operations</span>
       </h2>
       <p class="text-base text-slate-400 leading-relaxed">
-        Every manual entry, copy-paste task, and unreplied lead is a hidden operational cost. Use this interactive calculator to estimate how much revenue your current workflow is burning each year—and see exactly how much an automated system will save your business.
+        Every manual entry, copy-paste task, and unreplied lead is a hidden operational cost. Use this interactive calculator to estimate how much revenue your current workflow is burning each year—and see exactly how much a customized automated system built by NAMCODEX will save your business.
       </p>
       
       <!-- Value Proposition Badges -->
@@ -44,11 +44,17 @@
       <div class="absolute -top-10 -right-10 w-32 h-32 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
       
       <!-- Widget Header -->
-      <div class="mb-6">
-        <h3 class="text-lg font-bold text-white tracking-wide">
-          Calculate Your Automation ROI
-        </h3>
-        <p class="text-xs text-slate-400 mt-1">See how much manual workflow leaks from your bottom line in the UAE.</p>
+      <div class="mb-6 flex justify-between items-start">
+        <div>
+          <h3 class="text-lg font-bold text-white tracking-wide">
+            Calculate Your Automation ROI
+          </h3>
+          <p class="text-xs text-slate-400 mt-1">See how much manual workflow leaks from your bottom line in the UAE.</p>
+        </div>
+        <!-- Branded Tag inside the widget -->
+        <span class="text-[10px] font-mono bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 px-2 py-0.5 rounded uppercase tracking-widest">
+          NAMCODEX
+        </span>
       </div>
 
       <!-- Inputs Matrix -->
@@ -102,7 +108,7 @@
         <div class="flex justify-between items-center pt-3 border-t border-slate-900">
           <div>
             <span class="block text-sm font-bold text-emerald-400 tracking-tight">Annual System Savings</span>
-            <span class="text-[10px] text-slate-500 block mt-0.5">Assumes 85% pipeline integration efficiency</span>
+            <span class="text-[10px] text-slate-500 block mt-0.5">Assumes NAMCODEX 85% pipeline integration efficiency</span>
           </div>
           <span id="annualSavings" class="text-2xl font-black text-emerald-400 tracking-tight">AED 33,125</span>
         </div>
@@ -111,7 +117,7 @@
       <!-- Call-To-Action Routing -->
       <div class="mt-5">
         <a href="#contact" class="inline-block w-full text-center bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-bold py-3 px-4 rounded-xl transition-all duration-200 transform hover:-translate-y-0.5 shadow-lg shadow-cyan-500/10 text-sm">
-          Automate This Workflow
+          Deploy Your Solution
         </a>
       </div>
     </div>
@@ -128,27 +134,21 @@
       const annualSavings = document.getElementById('annualSavings');
 
       function executeROICalculation() {
-        // Parse inputs safely
         const weeklyHours = parseFloat(hoursInput.value) || 0;
         const hourlyRate = parseFloat(rateInput.value) || 0;
         
-        // Dynamically update runtime display text for the range pointer
         hoursValue.textContent = `${weeklyHours} hrs`;
         
-        // Operational Formulas (4.33 weeks per standard calendar month base)
         const computedMonthlyCost = weeklyHours * 4.33 * hourlyRate;
-        const computedYearlySavings = (computedMonthlyCost * 12) * 0.85; // Fixed 85% automation mitigation rate
+        const computedYearlySavings = (computedMonthlyCost * 12) * 0.85; 
         
-        // Update browser view node vectors mapped with clean regional currency strings
         monthlyLoss.textContent = 'AED ' + Math.round(computedMonthlyCost).toLocaleString();
         annualSavings.textContent = 'AED ' + Math.round(computedYearlySavings).toLocaleString();
       }
 
-      // Bind operational event hooks
       hoursInput.addEventListener('input', executeROICalculation);
       rateInput.addEventListener('input', executeROICalculation);
 
-      // Initial page state seed execution
       executeROICalculation();
     });
   </script>
