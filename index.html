@@ -172,69 +172,80 @@
   </script>
 
   <script>
-    const chatButton = document.getElementById('chat-button');
-    const chatWindow = document.getElementById('chat-window');
-    const closeChat = document.getElementById('close-chat');
-    const chatInput = document.getElementById('chat-input');
-    const sendBtn = document.getElementById('send-btn');
-    const chatMessages = document.getElementById('chat-messages');
-
-    // Toggle Chat Window Window open/close
-    chatButton.addEventListener('click', () => {
-      chatWindow.classList.toggle('hidden');
-      chatInput.focus();
-    });
-
-    closeChat.addEventListener('click', () => {
-      chatWindow.classList.add('hidden');
-    });
-
-    // Handle Message Appends
-    function appendMessage(text, isUser = false) {
-      const msgDiv = document.createElement('div');
-      msgDiv.className = isUser ? 'flex items-start justify-end space-x-2' : 'flex items-start space-x-2';
+    // Wait for the HTML elements to fully exist in the browser first
+    document.addEventListener('DOMContentLoaded', () => {
       
-      const contentHtml = isUser 
-        ? `<div class="bg-gradient-to-br from-cyan-500 to-blue-600 text-slate-950 p-3 rounded-xl rounded-tr-none max-w-[80%] leading-relaxed font-medium">${text}</div>`
-        : `<div class="bg-slate-800 p-1.5 rounded-md text-[10px] font-bold text-cyan-400 font-mono">NΩ</div>
-           <div class="bg-slate-800/80 border border-slate-800 p-3 rounded-xl rounded-tl-none max-w-[80%] leading-relaxed">${text}</div>`;
-      
-      msgDiv.innerHTML = contentHtml;
-      chatMessages.appendChild(msgDiv);
-      chatMessages.scrollTop = chatMessages.scrollHeight;
-    }
+      const chatButton = document.getElementById('chat-button');
+      const chatWindow = document.getElementById('chat-window');
+      const closeChat = document.getElementById('close-chat');
+      const chatInput = document.getElementById('chat-input');
+      const sendBtn = document.getElementById('send-btn');
+      const chatMessages = document.getElementById('chat-messages');
 
-    // Process Bot Responses based on Keywords
-    function handleBotResponse(userText) {
-      const query = userText.toLowerCase();
-      let reply = "Processing matrix request... My language database is currently limited. Would you like to schedule a direct operations audit with our architectural lead? Type **'audit'**.";
-
-      if (query.includes('audit') || query.includes('contact') || query.includes('price') || query.includes('cost')) {
-        reply = "Let's optimize your workspace operations. Drop us a DM on LinkedIn or email us directly at **ops@namcodex.com** to claim your free workflow bottleneck audit! 🚀";
-      } else if (query.includes('whatsapp') || query.includes('crm') || query.includes('make') || query.includes('n8n')) {
-        reply = "We design high-frequency pipelines using systems like Make.com and n8n to sync your CRMs instantly with local UAE WhatsApp business numbers. Leads route in under 10 seconds! ⚡";
-      } else if (query.includes('hello') || query.includes('hi') || query.includes('hey')) {
-        reply = "Hello! Looking to scale your business operations and minimize manual overhead with zero server latency? Let me know what system you are trying to automate!";
+      // Make sure the elements exist before attaching events
+      if (!chatButton || !chatWindow) {
+        console.error("NAMCODEX Chat Error: Elements not found in HTML. Check your IDs!");
+        return;
       }
 
-      // Simulate network response latency delay
-      setTimeout(() => {
-        appendMessage(reply, false);
-      }, 600);
-    }
+      // Toggle Chat Window Window open/close
+      chatButton.addEventListener('click', () => {
+        chatWindow.classList.toggle('hidden');
+        chatInput.focus();
+      });
 
-    function processSend() {
-      const text = chatInput.value.trim();
-      if (!text) return;
-      appendMessage(text, true);
-      chatInput.value = '';
-      handleBotResponse(text);
-    }
+      closeChat.addEventListener('click', () => {
+        chatWindow.classList.add('hidden');
+      });
 
-    // Event Listeners for actions
-    sendBtn.addEventListener('click', processSend);
-    chatInput.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') processSend();
+      // Handle Message Appends
+      function appendMessage(text, isUser = false) {
+        const msgDiv = document.createElement('div');
+        msgDiv.className = isUser ? 'flex items-start justify-end space-x-2' : 'flex items-start space-x-2';
+        
+        const contentHtml = isUser 
+          ? `<div class="bg-gradient-to-br from-cyan-500 to-blue-600 text-slate-950 p-3 rounded-xl rounded-tr-none max-w-[80%] leading-relaxed font-medium">${text}</div>`
+          : `<div class="bg-slate-800 p-1.5 rounded-md text-[10px] font-bold text-cyan-400 font-mono">NΩ</div>
+             <div class="bg-slate-800/80 border border-slate-800 p-3 rounded-xl rounded-tl-none max-w-[80%] leading-relaxed">${text}</div>`;
+        
+        msgDiv.innerHTML = contentHtml;
+        chatMessages.appendChild(msgDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      }
+
+      // Process Bot Responses based on Keywords
+      function handleBotResponse(userText) {
+        const query = userText.toLowerCase();
+        let reply = "Processing matrix request... Would you like to schedule a direct operations audit? Type **'audit'** or connect with us directly.";
+
+        if (query.includes('audit') || query.includes('contact') || query.includes('price') || query.includes('cost') || query.includes('help')) {
+          reply = "Let's build your automation pipeline. Chat with me directly via WhatsApp at **+971 55 399 1840** or drop an email to **nafidahmauna@gmail.com** to claim your custom bottleneck audit! 🚀";
+        } else if (query.includes('whatsapp') || query.includes('crm') || query.includes('make') || query.includes('n8n')) {
+          reply = "We design high-frequency pipelines using systems like Make.com and n8n to sync your CRMs instantly with local UAE WhatsApp business channels. Want a live demo? Reach us at **nafidahmauna@gmail.com**.";
+        } else if (query.includes('hello') || query.includes('hi') || query.includes('hey')) {
+          reply = "Hello! Looking to scale your business operations and minimize manual overhead? Tell me what workflows you run, or connect directly on WhatsApp: **+971 55 399 1840**.";
+        }
+
+        // Simulate slight network latency
+        setTimeout(() => {
+          appendMessage(reply, false);
+        }, 500);
+      }
+
+      function processSend() {
+        const text = chatInput.value.trim();
+        if (!text) return;
+        appendMessage(text, true);
+        chatInput.value = '';
+        handleBotResponse(text);
+      }
+
+      // Event Listeners for actions
+      sendBtn.addEventListener('click', processSend);
+      chatInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') processSend();
+      });
+
     });
   </script>
   
