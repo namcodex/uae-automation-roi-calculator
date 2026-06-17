@@ -170,5 +170,129 @@
       executeROICalculation();
     });
   </script>
+
+  <script>
+    const chatButton = document.getElementById('chat-button');
+    const chatWindow = document.getElementById('chat-window');
+    const closeChat = document.getElementById('close-chat');
+    const chatInput = document.getElementById('chat-input');
+    const sendBtn = document.getElementById('send-btn');
+    const chatMessages = document.getElementById('chat-messages');
+
+    // Toggle Chat Window Window open/close
+    chatButton.addEventListener('click', () => {
+      chatWindow.classList.toggle('hidden');
+      chatInput.focus();
+    });
+
+    closeChat.addEventListener('click', () => {
+      chatWindow.classList.add('hidden');
+    });
+
+    // Handle Message Appends
+    function appendMessage(text, isUser = false) {
+      const msgDiv = document.createElement('div');
+      msgDiv.className = isUser ? 'flex items-start justify-end space-x-2' : 'flex items-start space-x-2';
+      
+      const contentHtml = isUser 
+        ? `<div class="bg-gradient-to-br from-cyan-500 to-blue-600 text-slate-950 p-3 rounded-xl rounded-tr-none max-w-[80%] leading-relaxed font-medium">${text}</div>`
+        : `<div class="bg-slate-800 p-1.5 rounded-md text-[10px] font-bold text-cyan-400 font-mono">NΩ</div>
+           <div class="bg-slate-800/80 border border-slate-800 p-3 rounded-xl rounded-tl-none max-w-[80%] leading-relaxed">${text}</div>`;
+      
+      msgDiv.innerHTML = contentHtml;
+      chatMessages.appendChild(msgDiv);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    // Process Bot Responses based on Keywords
+    function handleBotResponse(userText) {
+      const query = userText.toLowerCase();
+      let reply = "Processing matrix request... My language database is currently limited. Would you like to schedule a direct operations audit with our architectural lead? Type **'audit'**.";
+
+      if (query.includes('audit') || query.includes('contact') || query.includes('price') || query.includes('cost')) {
+        reply = "Let's optimize your workspace operations. Drop us a DM on LinkedIn or email us directly at **ops@namcodex.com** to claim your free workflow bottleneck audit! 🚀";
+      } else if (query.includes('whatsapp') || query.includes('crm') || query.includes('make') || query.includes('n8n')) {
+        reply = "We design high-frequency pipelines using systems like Make.com and n8n to sync your CRMs instantly with local UAE WhatsApp business numbers. Leads route in under 10 seconds! ⚡";
+      } else if (query.includes('hello') || query.includes('hi') || query.includes('hey')) {
+        reply = "Hello! Looking to scale your business operations and minimize manual overhead with zero server latency? Let me know what system you are trying to automate!";
+      }
+
+      // Simulate network response latency delay
+      setTimeout(() => {
+        appendMessage(reply, false);
+      }, 600);
+    }
+
+    function processSend() {
+      const text = chatInput.value.trim();
+      if (!text) return;
+      appendMessage(text, true);
+      chatInput.value = '';
+      handleBotResponse(text);
+    }
+
+    // Event Listeners for actions
+    sendBtn.addEventListener('click', processSend);
+    chatInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') processSend();
+    });
+  </script>
+  
 </body>
+
+  <!-- ================= NAMCODEX AI CHATBOT ================= -->
+  <!-- Floating Chat Button -->
+  <button id="chat-button" class="fixed bottom-6 right-6 z-50 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white p-4 rounded-full shadow-2xl transition-all duration-300 transform hover:scale-110 flex items-center justify-center border border-cyan-400/30">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+    </svg>
+  </button>
+
+  <!-- Chat Window Container -->
+  <div id="chat-window" class="fixed bottom-24 right-6 z-50 w-[360px] h-[500px] bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl flex flex-col hidden overflow-hidden transition-all duration-300">
+    <!-- Header -->
+    <div class="bg-gradient-to-r from-slate-950 to-slate-900 border-b border-slate-800 p-4 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <!-- Minimalist Custom Logo Icon (N Engine Shape) -->
+        <div class="bg-gradient-to-br from-cyan-400 to-blue-500 p-2 rounded-lg flex items-center justify-center font-mono font-bold text-xs text-slate-950 shadow-md tracking-tighter">
+          NΩ
+        </div>
+        <div>
+          <h4 class="text-sm font-bold text-white tracking-wide">NAMCODEX AI</h4>
+          <p class="text-[10px] text-cyan-400 font-mono tracking-wider flex items-center">
+            <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full inline-block mr-1 animate-pulse"></span> ONLINE MATRIX
+          </p>
+        </div>
+      </div>
+      <!-- Close Button -->
+      <button id="close-chat" class="text-slate-400 hover:text-white transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L12 12M12 12l6 6M12 12l6-6M12 12l-6-6" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Messages Display Box Area -->
+    <div id="chat-messages" class="flex-1 p-4 overflow-y-auto space-y-3 scrollbar-thin text-xs text-slate-300">
+      <!-- Bot Greeting Message -->
+      <div class="flex items-start space-x-2">
+        <div class="bg-slate-800 p-1.5 rounded-md text-[10px] font-bold text-cyan-400 font-mono">NΩ</div>
+        <div class="bg-slate-800/80 border border-slate-800 p-3 rounded-xl rounded-tl-none max-w-[80%] leading-relaxed">
+          Marhaban! I am the NAMCODEX integration agent. Need help automating your CRM, WhatsApp pipelines, or business workflows in the UAE? Ask me anything or type <span class="text-cyan-400 font-mono font-bold">"audit"</span>.
+        </div>
+      </div>
+    </div>
+
+    <!-- Input Footer Bar -->
+    <div class="p-3 bg-slate-950 border-t border-slate-800 flex items-center space-x-2">
+      <input id="chat-input" type="text" placeholder="Type a message..." class="flex-1 bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-cyan-500 transition-colors">
+      <button id="send-btn" class="bg-cyan-500 hover:bg-cyan-400 text-slate-950 p-2 rounded-xl transition-colors flex items-center justify-center">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+          <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  
 </html>
